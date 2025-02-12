@@ -36,9 +36,11 @@ export default function LoginForm() {
       }
 
       await login(values);
-    } catch (error: any) {
-      console.error(error.message);
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        setError(error.message);
+      }
     }
   }
 

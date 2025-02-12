@@ -43,7 +43,6 @@ export const register = async (values: z.infer<typeof registerFormSchema>) => {
 
 export const login = async (values: z.infer<typeof loginFormSchema>) => {
   const { usernameOrEmail, password } = values;
-  let redirectPath: string | null = null
 
   try {
     const user = await prisma.user.findFirst({
@@ -63,17 +62,21 @@ export const login = async (values: z.infer<typeof loginFormSchema>) => {
     }
 
     await createSession(user.id);
-  } catch (error: any) {
-    if (error.message === "Email or username doesn't exist.") {
-      throw new Error("Email or username doesn't exist. Please try again.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message === "Email or username doesn't exist.") {
+        throw new Error("Email or username doesn't exist. Please try again.");
+      }
+
+      if (error.message === "Invalid credentials.") {
+        throw new Error("Invalid credentials. Please check your password.");
+      }
+
+      console.error("Error during login:", error);
+      throw new Error("An unexpected error occurred. Please try again later.");
     }
 
-    if (error.message === "Invalid credentials.") {
-      throw new Error("Invalid credentials. Please check your password.");
-    }
-
-    console.error("Error during login:", error);
-    throw new Error("An unexpected error occurred. Please try again later.");
+    throw new Error("An unknown error occurred.");
   } finally {
     redirect("/dashboard");
   }
