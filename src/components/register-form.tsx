@@ -8,7 +8,6 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { register } from "@/actions/auth";
+import Link from "next/link";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -49,7 +49,7 @@ export default function RegisterForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-96 m-32"
+        className="space-y-8 w-96 mx-auto pb-10 text-black"
       >
         <FormField
           control={form.control}
@@ -58,11 +58,8 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="johndoe22" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -74,11 +71,8 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="johndoe@example.com" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -90,11 +84,8 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -102,8 +93,13 @@ export default function RegisterForm() {
         {error && (
           <p className="text-sm font-medium text-destructive">{error}</p>
         )}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="bg-green-600">
+          Submit
+        </Button>
       </form>
+      <Link href={"/register"} className="mt-10">
+        Have an account? Log in
+      </Link>
     </Form>
   );
 }

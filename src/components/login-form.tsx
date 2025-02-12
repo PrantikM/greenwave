@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/actions/auth";
+import Link from "next/link";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -48,7 +48,7 @@ export default function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-96 m-32"
+        className="space-y-8 w-96 mx-auto"
       >
         <FormField
           control={form.control}
@@ -57,11 +57,8 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Email/Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="johndoe@example.com" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -73,11 +70,8 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -85,8 +79,9 @@ export default function LoginForm() {
         {error && (
           <p className="text-sm font-medium text-destructive">{error}</p>
         )}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="bg-green-600">Submit</Button>
       </form>
+      <Link href={"/register"} className="mt-16">Don't have an account? Signup</Link>
     </Form>
   );
 }
