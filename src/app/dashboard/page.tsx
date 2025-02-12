@@ -1,12 +1,9 @@
-import Link from "next/link";
+import Navbar from "@/components/navbar";
 
 export default function Dashboard() {
   return (
-    <main className="flex flex-col">
-      Dashboard
-      <Link href={"/chat"}>Chat</Link>
-      <Link href={"/waste"}>Waste Management</Link>
-      <Link href={"/power"}>Power</Link>
+    <main className="w-5/6 mx-auto">
+      <Navbar />
     </main>
   );
 }

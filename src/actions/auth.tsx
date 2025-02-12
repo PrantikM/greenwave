@@ -6,6 +6,7 @@ import { loginFormSchema, registerFormSchema } from "@/lib/definitions";
 import { compare, hash } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const register = async (values: z.infer<typeof registerFormSchema>) => {
   const { username, email, password } = values;
@@ -21,21 +22,27 @@ export const register = async (values: z.infer<typeof registerFormSchema>) => {
     });
 
     await createSession(newUser.id);
-  } catch (error: any) {
-    if (error.code === "P2002" && error.meta?.target?.includes("username")) {
-      throw new Error(
-        "Username already exists. Please choose a different one."
-      );
-    }
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === "P2002" && Array.isArray(error.meta?.target)) {
+        const targetField = error.meta.target[0];
 
-    if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-      throw new Error(
-        "Email already exists. Please use a different email address."
-      );
-    }
+        if (targetField === "username") {
+          throw new Error(
+            "Username already exists. Please choose a different one."
+          );
+        }
 
-    console.error("Error during signup:", error);
-    throw new Error("An unexpected error occurred. Please try again later.");
+        if (targetField === "email") {
+          throw new Error(
+            "Email already exists. Please use a different email address."
+          );
+        }
+      }
+
+      console.error("Error during signup:", error);
+      throw new Error("An unexpected error occurred. Please try again later.");
+    }
   } finally {
     redirect("/dashboard");
   }
