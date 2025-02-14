@@ -81,7 +81,7 @@ export default function LoginForm() {
         )}
         <Button type="submit" className="bg-green-600">Submit</Button>
       </form>
-      <Link href={"/register"} className="mt-16">Don't have an account? Signup</Link>
+      <Link href={"/register"} className="mt-16">Don&apos;t have an account? Signup</Link>
     </Form>
   );
 }
