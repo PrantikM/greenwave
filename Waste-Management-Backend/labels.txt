@@ -1,0 +1,6 @@
+0 Plastic Waste
+1 Paper/Cardboard
+2  Glass Waste
+3 Metal Waste
+4 Organic Waste
+5 Textile Waste
