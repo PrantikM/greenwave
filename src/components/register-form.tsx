@@ -49,7 +49,7 @@ export default function RegisterForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-96 mx-auto pb-10 text-black"
+        className="space-y-8 w-96 mx-auto pb-10 text-white"
       >
         <FormField
           control={form.control}
@@ -97,7 +97,7 @@ export default function RegisterForm() {
           Submit
         </Button>
       </form>
-      <Link href={"/register"} className="mt-10">
+      <Link href={"/login"} className="mt-10">
         Have an account? Log in
       </Link>
     </Form>
