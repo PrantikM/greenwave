@@ -6,7 +6,7 @@ export default function Dashboard() {
       <Navbar />
       <section className="flex justify-between mt-40">
         <a
-          href=""
+          href="https://greenwavebot.streamlit.app/"
           target="_blank"
           className="w-[30%] border-[1px] border-gray-400 p-8 hover:border-gray-50 hover:text-green-600 transition"
         >
